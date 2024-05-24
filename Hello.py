@@ -30,20 +30,41 @@ def run():
         page_icon="💰",
     )
 
-    st.write("# Welcome to SafE-Commerce!")
+    st.write("# 💰 Welcome to SafE-Commerce!")
 
     st.markdown(
     """
-        A web platform designed to track fraudulent activity within e-commerce transactions.
+        A web platform designed to track fraudulent activity within e-commerce transactions
     """
     )
+    st.markdown("---")
 
+    
     No_Transactions = st.slider("Number of Transactions", min_value=1, max_value=10, value=1)
-    No_Orders = st.slider("Number of orders ", min_value=1, max_value=10, value=1)
-    No_Payments = st.slider("Payments Attempt", min_value=1, max_value=10, value=1)
+    Transaction_fail = st.slider("How many time Transaction Fail?", min_value=0, max_value=10, value=0)
     Total_transaction_amt = st.text_input("Transaction Amount")
-    Transaction_fail = st.slider("How many time Transaction Fail?", min_value=0, max_value=10, value=1)
-    Payment_method_fail = st.slider("Payment Method Fail?", min_value=0, max_value=10, value=1)
+
+    st.markdown("---")
+    No_Orders = st.slider("Number of orders ", min_value=1, max_value=10, value=1)
+    Order_status = st.multiselect("Status of the order", 
+                            ["Failed", "Fulfilled", "Pending"])
+    st.write("info")
+
+    failed_satus = 0
+    fulfilled_status = 0
+    pending_status = 0
+
+    for status in Order_status:
+        if status == "Failed":
+            failed_satus = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+        elif status == "Fulfilled":
+             fulfilled_status = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+        elif status == "Pending":
+            pending_status = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+
+    st.markdown("---")
+    No_Payments = st.slider("Payments Attempt", min_value=1, max_value=10, value=1)
+    Payment_method_fail = st.slider("Payment Method Fail?", min_value=0, max_value=10, value=0)
 
     Payment_method = st.selectbox("Method Payment", 
                                   ["Apple Pay", "Bitcoin", "PayPal", "Card"])
@@ -60,23 +81,6 @@ def run():
         paypal = 1
     elif Payment_method == 'card':
         card = 1
-
-    Order_status = st.multiselect("Status of the order", 
-                            ["Failed", "Fulfilled", "Pending"])
-    st.write(f"You selected: {Order_status}")
-
-    failed_satus = 0
-    fulfilled_status = 0
-    pending_status = 0
-
-    for status in Order_status:
-        if status == "Failed":
-            failed_satus = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
-        elif status == "Fulfilled":
-             fulfilled_status = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
-        elif status == "Pending":
-            pending_status = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
-
 
 
     Payment_provider = st.multiselect("Method Payment", 
@@ -124,6 +128,7 @@ def run():
         elif status == "Voyager":
              voyager = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
 
+    
 
     transaction_result = ''
     if st.button('Check if Transaction is Fraudulent'):
