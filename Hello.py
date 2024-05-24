@@ -18,6 +18,12 @@ def fraud_predction(input_data):
     fraud = loaded_model.predict(input_data_reshaped)
     print(fraud)
 
+
+    if (fraud[0] == 0):
+       return 'VALID'
+    else:
+        return 'FRAUD'
+
 def run():
     st.set_page_config(
         page_title="SafE-commerce",
@@ -36,22 +42,8 @@ def run():
     No_Orders = st.slider("Number of orders ", min_value=1, max_value=10, value=1)
     No_Payments = st.slider("Payments Attempt", min_value=1, max_value=10, value=1)
     Total_transaction_amt = st.text_input("Transaction Amount")
-    Transaction_fail = st.radio("Transaction Fail?", 
-                                ('Yes', 'No'))
-
-
-    if Transaction_fail == 'yes':
-        Transaction_fail = 1
-    else:
-        Transaction_fail = 0
-
-    Payment_method_fail = st.radio("Payment Method Fail?",
-                                  ('Yes', 'No'))
-
-    if Payment_method_fail == 'yes':
-        Payment_method_fail = 1
-    else:
-        Payment_method_fail = 0
+    Transaction_fail = st.slider("How many time Transaction Fail?", min_value=0, max_value=10, value=1)
+    Payment_method_fail = st.slider("Payment Method Fail?", min_value=0, max_value=10, value=1)
 
     Payment_method = st.selectbox("Method Payment", 
                                   ["Apple Pay", "Bitcoin", "PayPal", "Card"])
@@ -68,22 +60,26 @@ def run():
         paypal = 1
     elif Payment_method == 'card':
         card = 1
-    
-    Order_status = st.radio("Current status of the order", 
+
+    Order_status = st.multiselect("Status of the order", 
                             ["Failed", "Fulfilled", "Pending"])
-    
+    st.write(f"You selected: {Order_status}")
+
     failed_satus = 0
     fulfilled_status = 0
     pending_status = 0
 
-    if Order_status == 'Failed':
-        failed_satus = 1
-    elif Order_status == 'Fulfilled':
-        fulfilled_status = 1
-    elif Order_status == 'Pending':
-        pending_status = 1
+    for status in Order_status:
+        if status == "Failed":
+            failed_satus = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+        elif status == "Fulfilled":
+             fulfilled_status = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+        elif status == "Pending":
+            pending_status = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
 
-    Payment_provider = st.selectbox("Method Payment", 
+
+
+    Payment_provider = st.multiselect("Method Payment", 
                                   ["American Express", "Diners Club", "Discover", "JCB 15", "JCB 16", "Maestro", "Mastercard", "Visa 13", "Visa 16", "Voyager"])
     
     american_express = 0
@@ -97,46 +93,51 @@ def run():
     visa_16 = 0
     voyager = 0
 
-    if Payment_provider == 'american_express':
-        apple_pay = 1
-    elif Payment_provider == 'diners_club':
-        bitcoin = 1
-    elif Payment_provider == 'discover':
-        paypal = 1
-    elif Payment_provider == 'jcb_15':
-        card = 1
-    elif Payment_provider == 'jcb_16':
-        bitcoin = 1
-    elif Payment_provider == 'Maestro':
-        paypal = 1
-    elif Payment_provider == 'Mastercard':
-        card = 1
-    elif Payment_provider == 'visa_13':
-        bitcoin = 1
-    elif Payment_provider == 'visa_16':
-        paypal = 1
-    elif Payment_provider == 'voyager':
-        card = 1
+    for status in Payment_provider:
+        if status == "American Express":
+            american_express = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+
+        elif status == "Diners Club":
+             diners_club = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+
+        elif status == "Discover":
+            discover = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+
+        elif status == "JCB 15":
+             jcb_15 = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+            
+        elif status == "JCB 16":
+            jcb_16 = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+
+        elif status == "Maestro":
+             Maestro = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+            
+        elif status == "Mastercard":
+            Mastercard = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+
+        elif status == "Visa 13":
+             visa_13 = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+            
+        elif status == "Visa 16":
+            visa_16 = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+
+        elif status == "Voyager":
+             voyager = st.number_input(f"How many times did the order status '{status}' occur?", min_value=0)
+
 
     transaction_result = ''
-    if st.button('Check if transaction is Fraud'):
-        transaction_result = fraud_predction([No_Transactions, No_Orders, No_Payments, float(Total_transaction_amt), Transaction_fail, Payment_method_fail, apple_pay, bitcoin, card, paypal, failed_satus, fulfilled_status, pending_status, american_express, diners_club, discover, jcb_15, jcb_16, Maestro, Mastercard, visa_13, visa_16, voyager])
-        if transaction_result == 0:
-            #st.success("IT'S A VALID TRANSACTION")
-            html_temp = """
-            <div style="background:#08A04B ;padding:10px ; border-radius:10px ">
-            <h3 style="color:white;text-align:center;">IT'S A VALID TRANSACTION</h3>
-            </div>
-            """
-            st.markdown(html_temp, unsafe_allow_html = True)
-        else:
-            #st.success("IT'S A FRAUD TRANSACTION")
-            html_temp = """
-            <div style="background:#FF0000 ;padding:10px ; border-radius:10px">
-            <h3 style="color:white;text-align:center;">IT'S A FRAUD TRANSACTION</h3>
-            </div>
-            """
-            st.markdown(html_temp, unsafe_allow_html = True)
+    if st.button('Check if Transaction is Fraudulent'):
+        transaction_result = fraud_predction(
+            [No_Transactions, No_Orders, No_Payments, float(Total_transaction_amt), Transaction_fail,
+             Payment_method_fail, apple_pay, bitcoin, card, paypal, failed_satus, fulfilled_status,
+             pending_status, american_express, diners_club, discover, jcb_15, jcb_16, Maestro, Mastercard,
+             visa_13, visa_16, voyager])
+            # Styling based on transaction result
+    if transaction_result == "FRAUD":
+        st.error(f"Transaction is {transaction_result}")
+    else:
+        st.success(f"Transaction is {transaction_result}")
+
 
 if __name__ == "__main__":
     run()
