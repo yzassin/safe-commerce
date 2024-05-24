@@ -83,7 +83,7 @@ def run():
         card = 1
 
 
-    Payment_provider = st.multiselect("Method Payment", 
+    Payment_provider = st.multiselect("Payment Provider", 
                                   ["American Express", "Diners Club", "Discover", "JCB 15", "JCB 16", "Maestro", "Mastercard", "Visa 13", "Visa 16", "Voyager"])
     
     american_express = 0
