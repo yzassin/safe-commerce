@@ -98,34 +98,34 @@ def run():
 
     for status in Payment_provider:
         if status == "American Express":
-            american_express = st.number_input(f"How many times '{status}' was used?", min_value=0)
+            american_express = st.number_input(f"How many time '{status}' was used?", min_value=0)
 
         elif status == "Diners Club":
-             diners_club = st.number_input(f"How many times '{status}' was used?", min_value=0)
+             diners_club = st.number_input(f"How many time '{status}' was used?", min_value=0)
 
         elif status == "Discover":
-            discover = st.number_input(f"How many times '{status}' was used?", min_value=0)
+            discover = st.number_input(f"How many time '{status}' was used?", min_value=0)
 
         elif status == "JCB 15":
-             jcb_15 = st.number_input(f"How many times '{status}' was used?", min_value=0)
+             jcb_15 = st.number_input(f"How many time '{status}' was used?", min_value=0)
             
         elif status == "JCB 16":
-            jcb_16 = st.number_input(f"How many times '{status}' was used?", min_value=0)
+            jcb_16 = st.number_input(f"How many time '{status}' was used?", min_value=0)
 
         elif status == "Maestro":
-             Maestro = st.number_input(f"How many times '{status}' was used?", min_value=0)
+             Maestro = st.number_input(f"How many time '{status}' was used?", min_value=0)
             
         elif status == "Mastercard":
-            Mastercard = st.number_input(f"How many times '{status}' was used?", min_value=0)
+            Mastercard = st.number_input(f"How many time '{status}' was used?", min_value=0)
 
         elif status == "Visa 13":
-             visa_13 = st.number_input(f"How many times '{status}' was used?", min_value=0)
+             visa_13 = st.number_input(f"How many time '{status}' was used?", min_value=0)
             
         elif status == "Visa 16":
-            visa_16 = st.number_input(f"How many times '{status}' was used?", min_value=0)
+            visa_16 = st.number_input(f"How many time '{status}' was used?", min_value=0)
 
         elif status == "Voyager":
-             voyager = st.number_input(f"How many times '{status}' was used?", min_value=0)
+             voyager = st.number_input(f"How many time '{status}' was used?", min_value=0)
 
     
 
