@@ -48,7 +48,6 @@ def run():
     No_Orders = st.slider("Number of orders ", min_value=1, max_value=10, value=1)
     Order_status = st.multiselect("Status of the order", 
                             ["Failed", "Fulfilled", "Pending"])
-    st.write("info")
 
     failed_satus = 0
     fulfilled_status = 0
